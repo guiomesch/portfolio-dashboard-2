@@ -1,3 +1,34 @@
-    :host { display:block; }
-    .layout { display:grid; grid-template-columns: 260px 1fr; gap: 16px; padding:16px; }
-    .filters { display:flex; gap: 12px; align-items:center; }
+:host { 
+    display:block; 
+}
+.layout { 
+    display:grid;
+    grid-template-columns: 260px 1fr; 
+    gap: 16px; 
+    padding:16px;
+}
+.filters {
+    display:flex;
+    gap: 12px; 
+    align-items:center; 
+    flex:0.1;
+}
+
+.charts-container {
+    width:60rem;
+    height:60rem; 
+    display:block;
+}
+
+.margin-top {
+    margin-top: 2rem;
+}
+
+.filter-container {
+    display: flex;
+    gap: 5rem;
+}
+
+.input-filter-container {
+    flex:1;
+}

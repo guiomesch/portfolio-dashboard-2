@@ -1,26 +1,32 @@
 @if(portfolios()){
     <div class="layout">
         <aside>
-            <h3>Portefeuilles</h3>
+            <h3>Wallets</h3>
             <mat-nav-list>
-            @for (portfolio of portfolios(); track portfolio.id) {
-                <a mat-list-item [routerLink]="['/p', portfolio.id]">{{ portfolio.name }}</a>
-            }
+                @for (portfolio of portfolios(); track portfolio.id) {
+                    <a mat-list-item [routerLink]="['/p', portfolio.id]" [activated]="currentId() == portfolio.id">{{ portfolio.name }}</a>
+                }
             </mat-nav-list>
         </aside>
         <section>
-            <div class="filters">
-                <mat-select  [value]="currentId()" (valueChange)="goto($event)">
-                    @for(pf of portfolios(); track pf.id){
-                        <mat-option [value]="pf.id">{{pf.name}}</mat-option>
-                    }
-                </mat-select>         
+            <div class="filter-container">
+                <div class="filters">
+                    <mat-select  [value]="currentId()" (valueChange)="goto($event)">
+                        @for(pf of portfolios(); track pf.id){
+                            <mat-option [value]="pf.id">{{pf.name}}</mat-option>
+                        }
+                    </mat-select>         
+                </div>
+                <div class="input-filter-container">
+                    <input matInput placeholder="Filter positions" aria-label="Filter" [formControl]="filterCtrl" />
+                </div>
             </div>
-            <div style="width:100%">
-                <input matInput placeholder="Filtrer les positions" aria-label="Filtre" [formControl]="filterCtrl" />
+            <div class="margin-top">            
+                <app-portfolio-table  [positions]="filteredPositions()"></app-portfolio-table>
             </div>
-            <app-portfolio-table [positions]="filteredPositions()"></app-portfolio-table>
-            <app-portfolio-charts [positions]="filteredPositions()" [portfolioId]="currentId()"></app-portfolio-charts>
+            <div class="charts-container margin-top">
+                <app-portfolio-charts [positions]="filteredPositions()" [portfolioId]="currentId()"></app-portfolio-charts>
+            </div>
         </section>
     </div>
 }

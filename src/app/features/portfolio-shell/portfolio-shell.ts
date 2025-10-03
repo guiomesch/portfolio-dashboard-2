@@ -27,6 +27,7 @@ export class PortfolioShellComponent {
     private _portFolioService = inject(PortfolioService);
     private route = inject(ActivatedRoute);
     private router = inject(Router);
+
     //Snackbar for showing messages
     private _snackBar = inject(MatSnackBar);
 
@@ -35,7 +36,7 @@ export class PortfolioShellComponent {
     positions = signal<Position[]>([]);
 
     filterCtrl = new FormControl('', { nonNullable: true });    
-    //transform into signal to apply filter after modification
+    //transform changes into signal to apply filter after modification
     filter = toSignal(this.filterCtrl.valueChanges, {initialValue : ''})
 
     filteredPositions = computed(() => {

@@ -38,3 +38,21 @@ body {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+:root {
+  @include mat.toolbar-overrides((
+    container-background-color: rgb(43, 40, 36),
+    container-text-color: rgb(255, 255, 255),
+  ));
+
+  @include mat.list-overrides((
+    active-indicator-color: rgb(235, 234, 234),
+    active-indicator-shape: 16px,
+  ));
+
+    @include mat.table-overrides((
+    background-color: rgb(235, 234, 234),
+    header-headline-color: rgb(0, 47, 255),
+  ));
+}
