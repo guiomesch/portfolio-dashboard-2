@@ -1,0 +1,35 @@
+<table mat-table [dataSource]="sorted()" class="mat-elevation-z8">
+
+  <!-- isin Column -->
+  <ng-container matColumnDef="isin">
+    <th mat-header-cell *matHeaderCellDef> IsIn. </th>
+    <td mat-cell *matCellDef="let p"> {{p.isin}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Name </th>
+    <td mat-cell *matCellDef="let p"> {{p.name}} </td>
+  </ng-container>
+
+  <!-- qty Column -->
+  <ng-container matColumnDef="qty">
+    <th mat-header-cell *matHeaderCellDef> Qty </th>
+    <td mat-cell *matCellDef="let p"> {{p.qty}} </td>
+  </ng-container>
+
+  <!-- price Column -->
+  <ng-container matColumnDef="price">
+    <th mat-header-cell *matHeaderCellDef> Price </th>
+    <td mat-cell *matCellDef="let p"> {{p.price}} </td>
+  </ng-container>
+
+<!-- mv Column -->
+  <ng-container matColumnDef="mv">
+    <th mat-header-cell *matHeaderCellDef> Market Value </th>
+    <td mat-cell *matCellDef="let p"> {{p.mv}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="cols"></tr>
+  <tr mat-row *matRowDef="let row; columns: cols;"></tr>
+</table>

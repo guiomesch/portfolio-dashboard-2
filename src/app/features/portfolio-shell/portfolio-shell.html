@@ -1,0 +1,28 @@
+@if(portfolios()){
+    <div>
+        <aside>
+            <h3>Portefeuilles</h3>
+            <mat-nav-list>
+            @for (portfolio of portfolios(); track portfolio.id) {
+                <a mat-list-item [routerLink]="['/p', portfolio.id]">{{ portfolio.name }}</a>
+            }
+            </mat-nav-list>
+        </aside>
+        <section>
+            <div class="filters">
+                <mat-select  [value]="currentId()" (valueChange)="goto($event)">
+                    @for(pf of portfolios(); track portfolios){
+                        <mat-option [value]="pf.id">{{pf.name}}</mat-option>
+                    }
+                </mat-select>
+                <input matInput placeholder="Filtrer les positions" [formControl]="filterCtrl" value="Sushi">
+            </div>
+
+            <app-portfolio-table [positions]="filteredPositions()"></app-portfolio-table>
+            <app-portfolio-charts [positions]="filteredPositions()" [portfolioId]="currentId()"></app-portfolio-charts>
+        </section>
+    </div>
+}
+@else {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+}
