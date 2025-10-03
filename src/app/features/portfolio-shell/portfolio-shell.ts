@@ -14,6 +14,7 @@ import {MatInputModule} from '@angular/material/input';
 import { FormControl, ReactiveFormsModule } from "@angular/forms";
 import { PortfolioTable } from "../portfolio-table/portfolio-table";
 import { PortfolioChartsComponent } from "../portfolio-charts/portfolio-charts";
+import { toSignal } from "@angular/core/rxjs-interop";
 
 @Component({
 selector: 'portfolio-shell',
@@ -33,10 +34,12 @@ export class PortfolioShellComponent {
     portfolios = signal<Portfolio[] | null>(null);
     positions = signal<Position[]>([]);
 
-    filterCtrl = new FormControl('', { nonNullable: true });
+    filterCtrl = new FormControl('', { nonNullable: true });    
+    //transform into signal to apply filter after modification
+    filter = toSignal(this.filterCtrl.valueChanges, {initialValue : ''})
 
     filteredPositions = computed(() => {
-        const q = (this.filterCtrl.value ?? '').toLowerCase().trim();
+        const q =   this.filter().toLowerCase().trim();
         if(!q) return this.positions();
         return this.positions().filter(p => (p.isin + ' '+ p.name).toLowerCase().includes(q));
     });
@@ -44,7 +47,7 @@ export class PortfolioShellComponent {
     constructor() {
         this._portFolioService.getPortfolios().subscribe({
             next: list => this.portfolios.set(list),
-            error: () => this._snackBar.open('Erreur chargement portefeuilles', 'Fermer', { duration: 3000 })
+            error: () => this._snackBar.open('Error loading wallets', 'Close', { duration: 3000 })
         }); 
         this.route.paramMap.subscribe(pm => {
             const id = pm.get('id') ?? 'P01';
@@ -56,7 +59,7 @@ export class PortfolioShellComponent {
     private loadPositions(id: string) {
         this._portFolioService.getPositions(id).subscribe({
             next: list => this.positions.set(list),
-            error: () => this._snackBar.open('Erreur chargement position', 'Fermer', {duration: 3000})
+            error: () => this._snackBar.open('Error loading position', 'Close', {duration: 3000})
         });
     }
 

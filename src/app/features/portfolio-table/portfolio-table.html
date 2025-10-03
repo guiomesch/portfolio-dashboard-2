@@ -27,7 +27,7 @@
 <!-- mv Column -->
   <ng-container matColumnDef="mv">
     <th mat-header-cell *matHeaderCellDef> Market Value </th>
-    <td mat-cell *matCellDef="let p"> {{p.mv}} </td>
+    <td mat-cell *matCellDef="let p"> {{p.qty * p.price}} </td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="cols"></tr>

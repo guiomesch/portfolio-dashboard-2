@@ -31,17 +31,17 @@ export class PortfolioService {
             { isin: 'LU0004', name: 'ETF D', sector: 'Equity', qty: 45, price: 310.0 },
         ]
         // Small variation per portfolio
-        const factor = 1 + (portfolioId.charCodeAt(1) % 7) / 100;
-        const mutated = base.map(p => ({ ...p, price: +(p.price * factor).toFixed(2) }));
+        const factor = 1 + (portfolioId.charCodeAt(2) % 7) / 100;
+        const mutated = base.map(p => ({ ...p, price: +(p.price * factor).toFixed(2), qty:  +(p.qty +portfolioId.charCodeAt(2)) }));
         return of(mutated).pipe(delay(this.LATENCY));
     }
 
     getTimeSeries(portfolioId: string) {
-        const id = portfolioId.charCodeAt(1)
-        let v = 1_000_000 + id * 1000;
+        const id = portfolioId.charCodeAt(2) * Math.random();
+        let v = 1000000 + id * 1000;
         const series: TimePoint[] = Array.from({ length: 12 }).map((_, i) => {
         v = v * (1 + (Math.sin((i + id) / 3) / 100));
-        return { t: new Date(Date.now() - (11 - i) * 30 * 24 * 3600_000).toISOString().slice(0, 10), value: Math.round(v) };
+        return { t: new Date(Date.now() - (11 - i) * 30 * 24 * 3600000).toISOString().slice(0, 10), value: Math.round(v) };
         });
         return of(series).pipe(delay(this.LATENCY));
     }
